@@ -1,0 +1,9 @@
+from sqlalchemy import String,Boolean
+from sqlalchemy.orm import Mapped,mapped_column
+from app.models.base import Base
+
+
+class TaskORM(Base):
+    __tablename__ = "tasks"
+    title: Mapped[str] = mapped_column(String, index=True)
+    completed: Mapped[bool] = mapped_column(Boolean, default=False)
