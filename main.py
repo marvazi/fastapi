@@ -6,12 +6,15 @@ from sqlalchemy import create_engine,String,Boolean,select
 from sqlalchemy.orm import sessionmaker,Session,mapped_column,Mapped,DeclarativeBase
 from contextlib import asynccontextmanager
 
+"""Проверка"""
+
 DATABASE_URL = "postgresql+psycopg://postgres:admin@localhost:15432/postgres"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker[Session](bind=engine)
 
 class Base(DeclarativeBase):
     id: Mapped[str] = mapped_column(String, primary_key=True,default=lambda: str(uuid4()))
+
 
 
 class TaskORM(Base):
@@ -123,7 +126,7 @@ def update_category(category_id: str,payload: CategoryUpdateSchema,db: Session =
     if payload.name:
         category_update.name = payload.name
     db.commit()
-    return categories
+    return category_update
         
 
 @app.delete('/categories/{category_id}',status_code=status.HTTP_204_NO_CONTENT)
